@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Github Language Profile Card</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+      integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./dist/css/main.css" />
+  </head>
+  <body>
+    <header class="header">
+      <img src="./src/images/logo.svg" alt="" class="logo" />
+      <div class="search">
+        <input type="text" id="search-input" placeholder="Github username..." />
+        <button id="search-button">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+    </header>
+    <div class="result">
+      <div class="info-top">
+        <div class="user-info">
+          <div class="left">
+            <img
+              src="./src/images/user-profile.jpg"
+              alt=""
+              class="user-info__user-image"
+              id="user-image"
+            />
+          </div>
+          <div class="right">
+            <span class="user-info__name"
+              ><strong id="user-full-name">Firstname Lastname</strong></span
+            >
+            <span class="user-info__username" id="username">@username</span>
+          </div>
+        </div>
+        <div class="lang-info">
+          <span class="lang-info__repo"
+            ><strong id="repo-length">42</strong> repo</span
+          >
+          <span class="lang-info__code-size"
+            ><strong id="code-size">10,12 MB</strong> code</span
+          >
+        </div>
+      </div>
+      <div class="info-bottom">
+        <div class="lang">
+          <span class="lang__name">HTML</span>
+          <div class="lang__bar"></div>
+          <span class="lang__percent">%43</span>
+        </div>
+        <div class="lang">
+          <span class="lang__name">HTML</span>
+          <div class="lang__bar"></div>
+          <span class="lang__percent">%43</span>
+        </div>
+      </div>
+    </div>
+    <script src="./src/index.js"></script>
+  </body>
+</html>

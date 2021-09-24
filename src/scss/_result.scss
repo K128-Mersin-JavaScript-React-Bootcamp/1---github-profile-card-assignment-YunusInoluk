@@ -1,0 +1,53 @@
+.result {
+  width: 80%;
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  .info-top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    .user-info {
+      display: flex;
+      .left {
+        img {
+          width: 8rem;
+          padding-right: 1rem;
+        }
+      }
+      .right {
+        display: flex;
+        flex-direction: column;
+        .user-info__name {
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+    .lang-info {
+      display: flex;
+      flex-direction: column;
+      align-items: end;
+      &__repo {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+  .info-bottom {
+    margin-top: 1rem;
+    border-top: 2px solid rgb(61, 61, 61);
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+    .lang {
+      display: flex;
+      font-weight: 800;
+      align-items: center;
+      padding: 0.5rem 0;
+      &__bar {
+        height: 1rem;
+        background-color: $primary-color;
+        width: 42%;
+        border-radius: 1rem;
+        margin: 0 1rem;
+      }
+    }
+  }
+}
