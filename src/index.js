@@ -9,8 +9,8 @@ let langsObj = {};
 
 function clickHandle() {
   async function getUserData() {
-    const user = document.getElementById("search-input").value;
-    const getUser = await fetch(ENDPOINT_URL + "users/" + user);
+    const user = document.getElementById("search-input");
+    const getUser = await fetch(ENDPOINT_URL + "users/" + user.value);
     const getUserJson = await getUser.json();
     userFullName.textContent = getUserJson.name;
     username.textContent = getUserJson.login;
@@ -18,8 +18,10 @@ function clickHandle() {
     userImage.src = getUserJson.avatar_url;
   }
   async function getRepos(callback) {
-    const user = document.getElementById("search-input").value;
-    const getRepo = await fetch(ENDPOINT_URL + "users/" + user + "/repos");
+    const user = document.getElementById("search-input");
+    const getRepo = await fetch(
+      ENDPOINT_URL + "users/" + user.value + "/repos"
+    );
     const repoData = await getRepo.json();
     return callback(repoData);
   }
