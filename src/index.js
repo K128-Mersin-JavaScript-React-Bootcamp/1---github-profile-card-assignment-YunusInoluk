@@ -26,9 +26,10 @@ function clickHandle() {
     return callback(repoData);
   }
   async function getLanguages(repositories) {
+    const user = document.getElementById("search-input");
     repositories.forEach(async (repo) => {
       const getLang = await fetch(
-        `https://api.github.com/repos/${user}/${repo.name}/languages`
+        `https://api.github.com/repos/${user.value}/${repo.name}/languages`
       );
       const getLangData = await getLang.json();
       return handleLanguages(getLangData);
