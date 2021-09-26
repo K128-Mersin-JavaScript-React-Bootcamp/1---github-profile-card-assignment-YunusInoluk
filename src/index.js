@@ -4,40 +4,42 @@ const userFullName = document.getElementById("user-full-name");
 const username = document.getElementById("username");
 const repoLength = document.getElementById("repo-length");
 const searchButton = document.getElementById("search-button");
-let userRepos = [];
-let langsArr = [];
+const ENDPOINT_URL = "https://api.github.com/";
 let langsObj = {};
-let totalCodeSize = [];
-async function fetchDatas() {
-  await fetch(`https://api.github.com/users/${user}`)
-    .then((response) => response.json())
-    .then(async (data) => {
-      userFullName.textContent = data.name;
-      username.textContent = data.login;
-      repoLength.textContent = data.public_repos;
-      userImage.src = data.avatar_url;
-      // console.log(data.public_repos);
-      await fetch(`https://api.github.com/users/${user}/repos`)
-        .then(async (responseRepo) => await responseRepo.json())
-        .then(async (resultRepo) => {
-          await resultRepo.forEach((repo) => {
-            userRepos.push(repo.name);
-          });
-        })
-        .catch((error) => console.log("error", error));
-      userRepos.forEach(async (item) => {
-        await fetch(`https://api.github.com/repos/${user}/${item}/languages`)
-          .then(async (responseLang) => await responseLang.json())
-          .then((data) => {
-            for (const [key, value] of Object.entries(data)) {
-              if (langsObj.hasOwnProperty(key))
-                langsObj[key] = langsObj[key] + value;
-              else langsObj[key] = value;
-            }
-          });
-      });
-      console.log(langsObj);
-      console.log(Object.values(langsObj));
+
+function clickHandle() {
+  async function getUserData() {
+    const user = document.getElementById("search-input").value;
+    const getUser = await fetch(ENDPOINT_URL + "users/" + user);
+    const getUserJson = await getUser.json();
+    userFullName.textContent = getUserJson.name;
+    username.textContent = getUserJson.login;
+    repoLength.textContent = getUserJson.public_repos;
+    userImage.src = getUserJson.avatar_url;
+  }
+  async function getRepos(callback) {
+    const user = document.getElementById("search-input").value;
+    const getRepo = await fetch(ENDPOINT_URL + "users/" + user + "/repos");
+    const repoData = await getRepo.json();
+    return callback(repoData);
+  }
+  async function getLanguages(repositories) {
+    repositories.forEach(async (repo) => {
+      const getLang = await fetch(
+        `https://api.github.com/repos/${user}/${repo.name}/languages`
+      );
+      const getLangData = await getLang.json();
+      return handleLanguages(getLangData);
     });
+  }
+  const handleLanguages = (languages) => {
+    for (const [key, value] of Object.entries(languages)) {
+      if (langsObj.hasOwnProperty(key)) langsObj[key] = langsObj[key] + value;
+      else langsObj[key] = value;
+    }
+  };
+  getUserData();
+  getRepos(getLanguages);
+  console.log(langsObj);
 }
-searchButton.addEventListener("click", fetchDatas);
+searchButton.addEventListener("click", clickHandle);
