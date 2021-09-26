@@ -8,33 +8,31 @@ const ENDPOINT_URL = "https://api.github.com/";
 let langsObj = {};
 
 function clickHandle() {
-  async function getUserData() {
+  function getUserData() {
     const user = document.getElementById("search-input");
-    const getUser = await fetch(ENDPOINT_URL + "users/" + user.value);
-    const getUserJson = await getUser.json();
-    userFullName.textContent = getUserJson.name;
-    username.textContent = getUserJson.login;
-    repoLength.textContent = getUserJson.public_repos;
-    userImage.src = getUserJson.avatar_url;
+    fetch(ENDPOINT_URL + "users/" + user.value)
+      .then((res) => res.json())
+      .then((data) => {
+        userFullName.textContent = data.name;
+        username.textContent = data.login;
+        repoLength.textContent = data.public_repos;
+        userImage.src = data.avatar_url;
+      });
   }
-  async function getRepos(callback) {
+  const getRepos = (callback) => {
     const user = document.getElementById("search-input");
-    const getRepo = await fetch(
-      ENDPOINT_URL + "users/" + user.value + "/repos"
-    );
-    const repoData = await getRepo.json();
-    return callback(repoData);
-  }
-  async function getLanguages(repositories) {
-    const user = document.getElementById("search-input");
-    repositories.forEach(async (repo) => {
-      const getLang = await fetch(
-        `https://api.github.com/repos/${user.value}/${repo.name}/languages`
-      );
-      const getLangData = await getLang.json();
-      return handleLanguages(getLangData);
+    fetch(ENDPOINT_URL + "users/" + user.value + "/repos")
+      .then((res) => res.json())
+      .then((data) => callback(data));
+  };
+  const getLanguages = (repositories) => {
+    repositories.forEach((repo) => {
+      const user = document.getElementById("search-input");
+      fetch(`https://api.github.com/repos/${user.value}/${repo.name}/languages`)
+        .then((res) => res.json())
+        .then((data) => handleLanguages(data));
     });
-  }
+  };
   const handleLanguages = (languages) => {
     for (const [key, value] of Object.entries(languages)) {
       if (langsObj.hasOwnProperty(key)) langsObj[key] = langsObj[key] + value;
